@@ -21,18 +21,23 @@ const chatSlice = createSlice({
       state.conversations.push(payload);
     },
     updateLastMessageConversations: (state, { payload }) => {
-      state.conversations = state.conversations.map((conversation) => {
-        if (conversation._id === payload.conversationId) {
-          conversation = {
-            ...conversation,
-            lastMessage: {
-              text: payload.messageText,
-              sender: payload.sender,
-            },
-          };
-        }
-        return conversation;
-      });
+      let conversation = state.conversations.find(
+        (c) => c._id === payload.conversationId
+      );
+      if (conversation) {
+        conversation = {
+          ...conversation,
+          lastMessage: {
+            text: payload.messageText,
+            sender: payload.sender,
+          },
+        };
+      }
+
+      let mockConversation = state.conversations.find((c) => c?.mock === true);
+      if (mockConversation) {
+        delete mockConversation.mock;
+      }
     },
 
     setSelectedConversation: (state, { payload }) => {

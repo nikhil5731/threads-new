@@ -113,7 +113,7 @@ const Actions = ({ post }) => {
           <ModalBody pb={6}>
             <FormControl>
               <Input
-                placeholder='Replay goes here'
+                placeholder='Reply goes here'
                 value={replayText}
                 onChange={(e) => setReplyText(e.target.value)}
               />

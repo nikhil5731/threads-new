@@ -63,6 +63,7 @@ const Chat = () => {
             userProfilePic: searchedUser.avatar,
           })
         );
+        setSearchText('');
         return;
       }
 
@@ -81,6 +82,7 @@ const Chat = () => {
           },
         ],
       };
+      setSearchText('');
       dispatch(addConversations(mockConversation));
     } catch (error) {
       const errorMessage = error?.response?.data?.msg || 'Something went wrong';
