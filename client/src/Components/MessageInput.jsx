@@ -31,6 +31,7 @@ const MessageInput = ({ setMessages }) => {
         updateLastMessageConversations({
           messageText,
           sender: response.data.newMessage.sender,
+          conversationId: response.data.newMessage.conversationId,
         })
       );
       setMessageText('');

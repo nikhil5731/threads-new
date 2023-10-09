@@ -2,6 +2,7 @@ import { BadRequestError } from '../errors/customError.js';
 import Conversation from '../models/ConversationModal.js';
 import Message from '../models/MessageModal.js';
 import { StatusCodes } from 'http-status-codes';
+import { getRecipientSocketId, io } from '../socket/socket.js';
 
 export const sendMessage = async (req, res) => {
   const { recipientId, message } = req.body;
@@ -36,6 +37,12 @@ export const sendMessage = async (req, res) => {
       },
     }),
   ]);
+
+  const recipientSocketId = getRecipientSocketId(recipientId);
+
+  if (recipientSocketId) {
+    io.to(recipientSocketId).emit('newMessage', newMessage);
+  }
 
   res.status(StatusCodes.CREATED).json({ newMessage });
 };

@@ -20,8 +20,11 @@ import {
   setSelectedConversation,
 } from '../features/chat/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGlobalSocketContext } from '../../Context/SocketContext';
 
 const Chat = () => {
+  const { socket, onlineUsers } = useGlobalSocketContext();
+
   const currentUser = useSelector((store) => store.user.user);
 
   const { conversations, selectedConversation } = useSelector(
@@ -174,6 +177,9 @@ const Chat = () => {
                   <Conversation
                     key={conversation._id}
                     conversation={conversation}
+                    isOnline={onlineUsers.includes(
+                      conversation.participants[0]._id
+                    )}
                   />
                 );
               })}

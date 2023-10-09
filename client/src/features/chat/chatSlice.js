@@ -22,7 +22,7 @@ const chatSlice = createSlice({
     },
     updateLastMessageConversations: (state, { payload }) => {
       state.conversations = state.conversations.map((conversation) => {
-        if (conversation._id === state.selectedConversation._id) {
+        if (conversation._id === payload.conversationId) {
           conversation = {
             ...conversation,
             lastMessage: {

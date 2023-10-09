@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedConversation } from '../features/chat/chatSlice';
 import verifiedLogo from '../assets/images/verified.png';
 
-const Conversation = ({ conversation }) => {
+const Conversation = ({ conversation, isOnline }) => {
   const user = conversation.participants[0];
   const lastMessage = conversation.lastMessage;
   const currentUser = useSelector((store) => store.user.user);
@@ -55,7 +55,7 @@ const Conversation = ({ conversation }) => {
     >
       <WrapItem>
         <Avatar size={{ base: 'xs', sm: 'sm', md: 'md' }} src={user.avatar}>
-          <AvatarBadge boxSize='1rem' bg='green.500' />
+          {isOnline && <AvatarBadge boxSize='1rem' bg='green.500' />}
         </Avatar>
       </WrapItem>
 

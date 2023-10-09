@@ -8,19 +8,41 @@ import {
   SkeletonCircle,
   Skeleton,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 import { toast } from 'react-toastify';
 import customFetch from '../utils/customFetch';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import verifiedLogo from '../assets/images/verified.png';
+import { useGlobalSocketContext } from '../../Context/SocketContext';
+import { updateLastMessageConversations } from '../features/chat/chatSlice';
 
 const MessageContainer = () => {
+  const { socket } = useGlobalSocketContext();
   const { selectedConversation } = useSelector((store) => store.chat);
   const [messagesLoading, setMessagesLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const currentUser = useSelector((store) => store.user.user);
+  const dispatch = useDispatch();
+  const messageEndRef = useRef(null);
+
+  useEffect(() => {
+    socket.on('newMessage', (message) => {
+      if (selectedConversation._id === message.conversationId) {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      }
+      dispatch(
+        updateLastMessageConversations({
+          messageText: message.text,
+          sender: message.sender,
+          conversationId: message.conversationId,
+        })
+      );
+    });
+
+    return () => socket.off('newMessage');
+  }, [socket]);
 
   const getMessages = async () => {
     if (selectedConversation.mock) {
@@ -46,6 +68,10 @@ const MessageContainer = () => {
   useEffect(() => {
     getMessages();
   }, [selectedConversation.userId]);
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   return (
     <Flex
@@ -110,13 +136,18 @@ const MessageContainer = () => {
                 </Flex>
               );
             })
-          : messages.map((message) => {
+          : messages.map((message, i) => {
               return (
-                <Message
+                <Flex
                   key={message._id}
-                  message={message}
-                  ownMessage={currentUser._id === message.sender}
-                />
+                  direction={'column'}
+                  ref={messages.length - 1 === i ? messageEndRef : null}
+                >
+                  <Message
+                    message={message}
+                    ownMessage={currentUser._id === message.sender}
+                  />
+                </Flex>
               );
             })}
       </Flex>
