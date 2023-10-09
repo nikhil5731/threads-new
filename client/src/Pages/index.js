@@ -1,0 +1,9 @@
+export { default as HomeLayout } from './HomeLayout';
+export { default as Register } from './Register';
+export { default as Login } from './Login';
+export { default as Home } from './Home';
+export { default as User } from './User';
+export { default as SinglePost } from './SinglePost';
+export { default as UpdateProfile } from './UpdateProfile';
+export { default as Error } from './Error';
+export { default as Chat } from './Chat';
