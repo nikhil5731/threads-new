@@ -9,8 +9,11 @@ const SocketContext = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const currentUser = useSelector((store) => store.user.user);
 
+  const url = 'https://threads-clone-app.onrender.com';
+  // const url = 'http://localhost:5000';
+
   useEffect(() => {
-    const socket = io('http://localhost:5000', {
+    const socket = io(url, {
       query: { userId: currentUser?._id },
     });
 
