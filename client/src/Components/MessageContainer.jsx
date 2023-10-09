@@ -83,15 +83,15 @@ const MessageContainer = () => {
       p={2}
     >
       {/* MESSAGE HEADER */}
-      <Flex w='full' h={12} alignItems={'center'} gap={2}>
-        <Link to={`/${currentUser.username}`}>
+      <Link to={`/${selectedConversation.username}`}>
+        <Flex w='full' h={12} alignItems={'center'} gap={2}>
           <Avatar src={selectedConversation.userProfilePic} size='sm' />
           <Text display={'flex'} alignItems={'center'}>
             {selectedConversation.username}
             <Image src={verifiedLogo} w={4} h={4} ml={1} />
           </Text>
-        </Link>
-      </Flex>
+        </Flex>
+      </Link>
 
       <Divider />
 
