@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import verifiedLogo from '../assets/images/verified.png';
 import { useGlobalSocketContext } from '../../Context/SocketContext';
 import { updateLastMessageConversations } from '../features/chat/chatSlice';
+import { Link } from 'react-router-dom';
 
 const MessageContainer = () => {
   const { socket } = useGlobalSocketContext();
@@ -83,11 +84,13 @@ const MessageContainer = () => {
     >
       {/* MESSAGE HEADER */}
       <Flex w='full' h={12} alignItems={'center'} gap={2}>
-        <Avatar src={selectedConversation.userProfilePic} size='sm' />
-        <Text display={'flex'} alignItems={'center'}>
-          {selectedConversation.username}
-          <Image src={verifiedLogo} w={4} h={4} ml={1} />
-        </Text>
+        <Link to={`/${currentUser.username}`}>
+          <Avatar src={selectedConversation.userProfilePic} size='sm' />
+          <Text display={'flex'} alignItems={'center'}>
+            {selectedConversation.username}
+            <Image src={verifiedLogo} w={4} h={4} ml={1} />
+          </Text>
+        </Link>
       </Flex>
 
       <Divider />
