@@ -27,6 +27,8 @@ import { action as registerAction } from './Pages/Register';
 import { action as loginAction } from './Pages/Login';
 import { action as updateProfileAction } from './Pages/UpdateProfile';
 
+import SocketContext from '../Context/SocketContext';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -69,7 +71,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <Container maxW='678px' position='relative'>
-      <RouterProvider router={router} />
+      <SocketContext>
+        <RouterProvider router={router} />
+      </SocketContext>
     </Container>
   );
 };

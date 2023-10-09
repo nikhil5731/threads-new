@@ -3,8 +3,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
-// import { app, server } from './socket/socket.js';
-const app = express();
+import { app, server } from './socket/socket.js';
+// const app = express();
 
 import morgan from 'morgan';
 import mongoose from 'mongoose';
@@ -73,7 +73,7 @@ app.use(errorHandlerMiddleware);
 const port = process.env.PORT || 5000;
 try {
   await mongoose.connect(process.env.MONGO_URL);
-  app.listen(port, console.log(`server is listening on port ${port}... `));
+  server.listen(port, console.log(`server is listening on port ${port}... `));
 } catch (err) {
   console.log(err);
   process.exit(1);
