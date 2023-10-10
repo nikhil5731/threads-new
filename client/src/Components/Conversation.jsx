@@ -64,7 +64,7 @@ const Conversation = ({ conversation, isOnline }) => {
           {user.username} <Image src={verifiedLogo} w={4} h={4} ml={1} />
         </Text>
         <Text fontSize='sm' display={'flex'} alignItems='center' gap={1}>
-          {currentUser._id === lastMessage.sender && <BsCheck2All size={18} />}
+          {currentUser?._id === lastMessage.sender && <BsCheck2All size={18} />}
           {lastMessage.text.length > 15
             ? lastMessage.text.substring(0, 15) + '...'
             : lastMessage.text}

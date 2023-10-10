@@ -43,7 +43,7 @@ const MessageContainer = () => {
     });
 
     return () => socket.off('newMessage');
-  }, [socket]);
+  }, [socket, selectedConversation]);
 
   const getMessages = async () => {
     if (selectedConversation.mock) {

@@ -26,6 +26,13 @@ const MessageInput = ({ setMessages }) => {
         message: messageText,
         recipientId: selectedConversation.userId,
       });
+      if (selectedConversation.mock) {
+        toast.success(`connecting to ${selectedConversation.username}`);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        return;
+      }
       setMessages((message) => [...message, response.data.newMessage]);
       dispatch(
         updateLastMessageConversations({

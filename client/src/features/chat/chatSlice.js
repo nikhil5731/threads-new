@@ -24,19 +24,12 @@ const chatSlice = createSlice({
       let conversation = state.conversations.find(
         (c) => c._id === payload.conversationId
       );
-      if (conversation) {
-        conversation = {
-          ...conversation,
-          lastMessage: {
-            text: payload.messageText,
-            sender: payload.sender,
-          },
-        };
-      }
 
-      let mockConversation = state.conversations.find((c) => c?.mock === true);
-      if (mockConversation) {
-        delete mockConversation.mock;
+      if (conversation) {
+        conversation.lastMessage = {
+          text: payload.messageText,
+          sender: payload.sender,
+        };
       }
     },
 
