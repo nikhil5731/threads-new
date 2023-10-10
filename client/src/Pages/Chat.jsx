@@ -18,23 +18,27 @@ import {
   setConversations,
   addConversations,
   setSelectedConversation,
+  updateLastMessageSeenConversations,
 } from '../features/chat/chatSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGlobalSocketContext } from '../../Context/SocketContext';
 
 const Chat = () => {
   const { socket, onlineUsers } = useGlobalSocketContext();
-
   const currentUser = useSelector((store) => store.user.user);
-
   const { conversations, selectedConversation } = useSelector(
     (store) => store.chat
   );
   const [searchText, setSearchText] = useState('');
   const [isSearchingUser, setIsSearchingUser] = useState(false);
-
   const dispatch = useDispatch();
   const [isLoadingConversations, setIsLoadingConversations] = useState(false);
+
+  useEffect(() => {
+    socket.on('messagesSeen', ({ conversationId }) => {
+      dispatch(updateLastMessageSeenConversations(conversationId));
+    });
+  }, [socket]);
 
   const handleConversationSearch = async (e) => {
     e.preventDefault();

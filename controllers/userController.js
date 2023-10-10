@@ -44,7 +44,7 @@ export const updateUser = async (req, res) => {
 
   if (req.file) {
     if (user.avatar) {
-      await await cloudinary.v2.uploader.destroy(
+      await cloudinary.v2.uploader.destroy(
         user.avatar.split('/').pop().split('.')[0]
       );
     }

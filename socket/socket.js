@@ -1,6 +1,8 @@
 import { Server } from 'socket.io';
 import http from 'http';
 import express from 'express';
+import Message from './../models/MessageModal.js';
+import Conversation from './../models/ConversationModal.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -23,6 +25,30 @@ io.on('connection', (socket) => {
   if (userId != 'undefined') userSocketMap[userId] = socket.id;
 
   io.emit('getOnlineUsers', Object.keys(userSocketMap)); // [1,2,3] - emit an event event
+
+  socket.on('markMessagesAsSeen', async ({ conversationId, userId }) => {
+    try {
+      // updating messages to seen
+      await Message.updateMany(
+        { conversationId, seen: false },
+        {
+          $set: { seen: true },
+        }
+      );
+
+      // updating last messages to seen
+      await Conversation.updateOne(
+        { _id: conversationId },
+        {
+          $set: { 'lastMessage.seen': true },
+        }
+      );
+
+      io.to(userSocketMap[userId]).emit('messagesSeen', { conversationId });
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   socket.on('disconnect', () => {
     // lister for event

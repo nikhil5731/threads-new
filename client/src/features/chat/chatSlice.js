@@ -36,6 +36,18 @@ const chatSlice = createSlice({
     setSelectedConversation: (state, { payload }) => {
       state.selectedConversation = payload;
     },
+
+    updateLastMessageSeenConversations: (state, { payload }) => {
+      state.conversations = state.conversations.map((conversation) => {
+        if (conversation._id === payload) {
+          return {
+            ...conversation,
+            lastMessage: { ...conversation.lastMessage, seen: true },
+          };
+        }
+        return conversation;
+      });
+    },
   },
 });
 
@@ -44,5 +56,6 @@ export const {
   addConversations,
   updateLastMessageConversations,
   setSelectedConversation,
+  updateLastMessageSeenConversations,
 } = chatSlice.actions;
 export default chatSlice.reducer;

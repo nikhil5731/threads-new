@@ -8,9 +8,10 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
+  Box,
 } from '@chakra-ui/react';
 import React from 'react';
-import { BsCheck2All } from 'react-icons/bs';
+import { BsCheck2All, BsFillImageFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedConversation } from '../features/chat/chatSlice';
 import verifiedLogo from '../assets/images/verified.png';
@@ -63,12 +64,18 @@ const Conversation = ({ conversation, isOnline }) => {
         <Text fontWeight='700' display='flex' alignItems='center'>
           {user.username} <Image src={verifiedLogo} w={4} h={4} ml={1} />
         </Text>
-        <Text fontSize='sm' display={'flex'} alignItems='center' gap={1}>
-          {currentUser?._id === lastMessage.sender && <BsCheck2All size={18} />}
+        <Box fontSize='sm' display={'flex'} alignItems='center' gap={1}>
+          {currentUser?._id === lastMessage.sender ? (
+            <Box color={lastMessage.seen ? 'blue.400' : ''}>
+              <BsCheck2All size={16} />
+            </Box>
+          ) : (
+            ''
+          )}
           {lastMessage.text.length > 15
             ? lastMessage.text.substring(0, 15) + '...'
-            : lastMessage.text}
-        </Text>
+            : lastMessage.text || <BsFillImageFill size={16} />}
+        </Box>
       </Stack>
     </Flex>
   );
