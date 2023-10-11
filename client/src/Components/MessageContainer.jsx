@@ -18,6 +18,7 @@ import verifiedLogo from '../assets/images/verified.png';
 import { useGlobalSocketContext } from '../../Context/SocketContext';
 import { updateLastMessageConversations } from '../features/chat/chatSlice';
 import { Link } from 'react-router-dom';
+import messageSound from '../assets/sounds/message.mp3';
 
 const MessageContainer = () => {
   const { socket } = useGlobalSocketContext();
@@ -33,6 +34,11 @@ const MessageContainer = () => {
       if (selectedConversation._id === message.conversationId) {
         setMessages((prevMessages) => [...prevMessages, message]);
       }
+      if (!document.hasFocus()) {
+        const sound = new Audio(messageSound);
+        sound.play();
+      }
+
       dispatch(
         updateLastMessageConversations({
           messageText: message.text,
