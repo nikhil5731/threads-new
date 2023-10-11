@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Actions, Comment } from '../Components';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import customFetch from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
@@ -84,15 +84,17 @@ const SinglePost = () => {
   return (
     <>
       <Flex>
-        <Flex w={'full'} alignItems={'center'} gap={3}>
-          <Avatar src={user.avatar} size={'md'} name={user.username} />
-          <Flex alignItems={'center'}>
-            <Text fontSize='sm' fontWeight='bold'>
-              {user.name}
-            </Text>
-            <Image src={verifiedLogo} h={4} ml={4} />
+        <Link to={`/${user.name}`}>
+          <Flex w={'full'} alignItems={'center'} gap={3}>
+            <Avatar src={user.avatar} size={'md'} name={user.username} />
+            <Flex alignItems={'center'}>
+              <Text fontSize='sm' fontWeight='bold'>
+                {user.name}
+              </Text>
+              <Image src={verifiedLogo} h={4} ml={4} />
+            </Flex>
           </Flex>
-        </Flex>
+        </Link>
 
         <Flex gap={4} alignItems='center'>
           <Text

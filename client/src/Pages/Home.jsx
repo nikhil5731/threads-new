@@ -1,7 +1,6 @@
-import { Heading } from '@chakra-ui/react';
-import { useLoaderData } from 'react-router-dom';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import customFetch from '../utils/customFetch';
-import { Post } from '../Components';
+import { Post, SuggestedUsers } from '../Components';
 import { setPost } from '../features/post/postSlice';
 import { store } from '../store';
 import { useSelector } from 'react-redux';
@@ -21,15 +20,25 @@ const Home = () => {
   const posts = useSelector((store) => store.post.posts);
 
   if (posts.length === 0) {
-    return <Heading>Follow some users to see feed</Heading>;
+    return (
+      <Box>
+        <Heading>Follow some users to see feed</Heading>
+      </Box>
+    );
   }
 
   return (
-    <>
-      {posts.map((post) => {
-        return <Post key={post._id} post={post} />;
-      })}
-    </>
+    <Flex gap={10} alignItems={'flex-start'}>
+      <Box flex={7}>
+        {posts.map((post) => {
+          return <Post key={post._id} post={post} />;
+        })}
+      </Box>
+
+      <Box flex={3} display={{ base: 'none', md: 'block' }}>
+        <SuggestedUsers />
+      </Box>
+    </Flex>
   );
 };
 

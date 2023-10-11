@@ -1,5 +1,5 @@
+import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Container } from '@chakra-ui/react';
 
 import {
   Register,
@@ -70,11 +70,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <Container maxW='678px' position='relative'>
-      <SocketContext>
-        <RouterProvider router={router} />
-      </SocketContext>
-    </Container>
+    <SocketContext>
+      <RouterProvider router={router} />
+    </SocketContext>
   );
 };
 

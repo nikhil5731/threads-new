@@ -16,45 +16,18 @@ import { BsInstagram } from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import customFetch from '../utils/customFetch';
+import useFollowUnFollow from '../hooks/useFollowUnFollow';
 
 const UserHeader = ({ user }) => {
   const { user: currentUser } = useSelector((store) => store.user); // logged in user
-  const [following, setFollowing] = useState(
-    user.followers.includes(currentUser?._id)
-  );
-  const [updating, setUpdating] = useState(false);
+
+  const { handleFollowAndUnFollow, following, updating } =
+    useFollowUnFollow(user);
 
   const copyURL = async () => {
     const currentURL = window.location.href;
     await navigator.clipboard.writeText(currentURL);
     toast.success('link copied');
-  };
-
-  const handleFollowAndUnFollow = async () => {
-    if (!currentUser) {
-      toast.error('Please login to follow');
-      return;
-    }
-    setUpdating(true);
-    try {
-      const response = await customFetch(`/users/follow/${user._id}`);
-      if (following) {
-        toast.success(`Unfollowed ${user.username}`);
-        user.followers.pop(); // update only front end
-      } else {
-        toast.success(`Following ${user.username}`);
-        user.followers.push(currentUser?._id); // update only front end
-      }
-      setFollowing(!following);
-    } catch (error) {
-      const errorMessage = error?.response?.data?.msg || 'Something went wrong';
-      toast.error(errorMessage);
-      return errorMessage;
-    } finally {
-      setUpdating(false);
-    }
   };
 
   return (

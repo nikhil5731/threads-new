@@ -111,3 +111,27 @@ export const followUnFollowUser = async (req, res) => {
     res.status(StatusCodes.OK).json({ msg: 'Follow successfully' });
   }
 };
+
+export const getSuggestedUsers = async (req, res) => {
+  // exclude current user from suggested users array and also include users that current user is already following
+  const userId = req.user.userId;
+
+  const usersFollowedByYou = await User.findById(userId).select('following');
+
+  const randomUsers = await User.aggregate([
+    { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
+    {
+      $sample: { size: 10 }, // selecting random documents from a collection.
+    },
+  ]);
+
+  const filteredUsers = randomUsers.filter(
+    (user) => !usersFollowedByYou.following.includes(user._id)
+  );
+
+  const suggestedUsers = filteredUsers.slice(0, 5);
+
+  suggestedUsers.forEach((user) => delete user.password);
+
+  res.status(StatusCodes.OK).json({ suggestedUsers });
+};
