@@ -10,6 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 export const loader = async ({ params }) => {
   try {
     const response = await customFetch(`/users/profile/${params.username}`);
+    if (response.data.user.isFrozen) {
+      toast.success('This account has been frozen');
+      return { user: null };
+    }
     return { user: response.data.user };
   } catch (error) {
     const errorMessage = error?.response?.data?.msg || 'Something went wrong';
@@ -25,6 +29,7 @@ const User = () => {
   const dispatch = useDispatch();
 
   const getPost = async () => {
+    if (!user) return;
     setIsPostLoading(true);
     try {
       const response = await customFetch(`/posts/get-posts/${user.username}`);

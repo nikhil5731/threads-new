@@ -7,6 +7,7 @@ import { RxAvatar } from 'react-icons/rx';
 import { RiChatSmile2Line } from 'react-icons/ri';
 import lightLogo from '../assets/images/light-logo.svg';
 import darkLogo from '../assets/images/dark-logo.svg';
+import { MdOutlineSettings } from 'react-icons/md';
 
 const Header = () => {
   const { user } = useSelector((store) => store.user);
@@ -39,6 +40,10 @@ const Header = () => {
 
             <Link to={`/chat`}>
               <RiChatSmile2Line size={24} />
+            </Link>
+
+            <Link to={`/settings`}>
+              <MdOutlineSettings size={24} />
             </Link>
 
             <LogoutBtn />

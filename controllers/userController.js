@@ -119,7 +119,12 @@ export const getSuggestedUsers = async (req, res) => {
   const usersFollowedByYou = await User.findById(userId).select('following');
 
   const randomUsers = await User.aggregate([
-    { $match: { _id: { $ne: new mongoose.Types.ObjectId(userId) } } },
+    {
+      $match: {
+        _id: { $ne: new mongoose.Types.ObjectId(userId) },
+        isFrozen: false,
+      },
+    },
     {
       $sample: { size: 10 }, // selecting random documents from a collection.
     },
@@ -134,4 +139,11 @@ export const getSuggestedUsers = async (req, res) => {
   suggestedUsers.forEach((user) => delete user.password);
 
   res.status(StatusCodes.OK).json({ suggestedUsers });
+};
+
+export const freezeAccount = async (req, res) => {
+  const user = await User.findById(req.user.userId);
+  user.isFrozen = true;
+  await user.save();
+  res.status(StatusCodes.OK).json({ msg: 'your account is frozen' });
 };

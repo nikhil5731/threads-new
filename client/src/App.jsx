@@ -11,6 +11,7 @@ import {
   UpdateProfile,
   Chat,
   Error,
+  Settings,
 } from './Pages';
 
 // loader
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: 'chat',
         element: <Chat />,
+      },
+      {
+        path: 'settings',
+        element: <Settings />,
       },
     ],
   },

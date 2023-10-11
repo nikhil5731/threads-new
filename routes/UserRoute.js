@@ -6,6 +6,7 @@ import {
   followUnFollowUser,
   getUserProfile,
   getSuggestedUsers,
+  freezeAccount,
 } from '../controllers/userController.js';
 import { updateUserInput } from '../middleware/validationMiddleware.js';
 import { authorizedPermission } from '../middleware/authMiddleware.js';
@@ -18,6 +19,8 @@ router.route('/get-suggested-users').get(getSuggestedUsers);
 router
   .route('/update-user')
   .patch(upload.single('avatar'), updateUserInput, updateUser);
+
+router.route('/freeze').patch(freezeAccount);
 
 router.route('/follow/:id').get(followUnFollowUser);
 

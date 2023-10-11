@@ -65,7 +65,7 @@ app.get('*', (req, res) => {
 });
 
 app.use('*', (req, res) => {
-  res.status(404).json({ msg: 'page not found' });
+  res.status(404).json({ msg: 'route not found' });
 });
 
 app.use(errorHandlerMiddleware);

@@ -22,6 +22,12 @@ export const login = async (req, res) => {
 
   if (!isValidUser) throw new UnauthenticatedError('invalid credentials');
 
+  // incase if user set his account to frozen and now he want to unfreeze his account
+  if (user.isFrozen) {
+    user.isFrozen = false;
+    await user.save();
+  }
+
   const token = createJWT({ userId: user._id });
 
   const oneDay = 1000 * 60 * 60 * 24;

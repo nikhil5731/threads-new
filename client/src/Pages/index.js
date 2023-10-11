@@ -7,3 +7,4 @@ export { default as SinglePost } from './SinglePost';
 export { default as UpdateProfile } from './UpdateProfile';
 export { default as Error } from './Error';
 export { default as Chat } from './Chat';
+export { default as Settings } from './Settings';
