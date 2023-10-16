@@ -9,7 +9,7 @@ const SocketContext = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const currentUser = useSelector((store) => store.user.user);
 
-  const url = 'http://localhost:5000';
+  const url = 'https://threads-backend-dbyy.onrender.com';
   // const url = 'https://threads-clone-app.onrender.com';
 
   useEffect(() => {
