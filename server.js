@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import cloudinary from "cloudinary";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
+import cors from "cors";
 
 // routers
 import AuthRouter from "./routes/AuthRoute.js";
@@ -59,6 +60,7 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/users", authenticateUser, UserRouter);
 app.use("/api/v1/posts", authenticateUser, PostRouter);
 app.use("/api/v1/messages", authenticateUser, MessageRoute);
+app.use(cors());
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
