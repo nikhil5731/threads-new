@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "https://threads-backend-dbyy.onrender.com",
+  "proxy": "https://threads-new-backend.onrender.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
