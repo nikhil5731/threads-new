@@ -18,6 +18,7 @@ export const action = async ({ request }) => {
   const data = Object.fromEntries(formData);
   try {
     await customFetch.post('/auth/login', data);
+    toast.success('Login successfully');
     return redirect('/');
   } catch (error) {
     const errorMessage = error?.response?.data?.msg || 'Something went wrong';
