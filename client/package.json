@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "https://threads-new-backend.onrender.com",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -39,5 +38,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "vite": "^4.4.5"
-  }
+  },
+  "proxy": "https://threads-new-backend.onrender.com"
 }

@@ -60,7 +60,7 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/users", authenticateUser, UserRouter);
 app.use("/api/v1/posts", authenticateUser, PostRouter);
 app.use("/api/v1/messages", authenticateUser, MessageRoute);
-app.use(cors());
+app.use("*",cors());
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
@@ -70,16 +70,6 @@ app.use("*", (req, res) => {
   res.status(404).json({ msg: "route not found" });
 });
 
-app.use(function (req, res, next) {
-  //Enabling CORS
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-  );
-  next();
-});
 
 app.use(errorHandlerMiddleware);
 
